@@ -22,6 +22,9 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // assumption: header is title
+    @Column
+    private String header;
     @Column(columnDefinition="TEXT")
     private String description;
     @Column(columnDefinition="TEXT")
@@ -33,8 +36,10 @@ public class Article {
     private LocalDateTime createdDate = LocalDateTime.now(ZoneOffset.UTC);
 
     // assumption: keywords are separated by spaces
+    @Column
     private String keywords;
 
     // assumption author onsist of firstname lastname; authors are seprated by ','
+    @Column
     private String authors;
 }

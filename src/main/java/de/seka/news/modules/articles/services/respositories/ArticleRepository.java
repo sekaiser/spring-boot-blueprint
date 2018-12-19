@@ -10,8 +10,7 @@ import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<Article, Long>, JpaSpecificationExecutor<Article> {
 
-    @Query(value = "SELECT a FROM #{#entityName} t "
-            + "WHERE t.keywords LIKE %:keywords%"
-            + "ORDER BY t.lastUpdate DESC")
+    @Query(value = "SELECT a FROM #{#entityName} a "
+            + "WHERE a.keywords LIKE %:keywords%")
     List<Article> findByKeywords(@Param(value = "keywords") String keywords);
 }

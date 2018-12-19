@@ -23,6 +23,13 @@ repositories {
 	mavenCentral()
 }
 
+task("addNewMigration") {
+	doLast {
+		def timestamp = new Date().format("yyyyMMddHHmmssSSS", TimeZone.getTimeZone("GMT"))
+		def fileName = "./src/main/resources/db/migration/" + "V" + timestamp + "___" + migrationName + ".sql"
+		file(new File(fileName)).createNewFile()
+	}
+}
 
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
