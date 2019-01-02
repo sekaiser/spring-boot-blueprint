@@ -1,9 +1,6 @@
 package de.seka.news.modules.articles.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
@@ -14,15 +11,17 @@ import java.time.ZoneOffset;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name="article")
 @Builder
-public class Article {
+@Getter
+@Setter
+public class ArticleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // assumption: header is title
+    @Column
+    private String identifier;
     @Column
     private String header;
     @Column(columnDefinition="TEXT")

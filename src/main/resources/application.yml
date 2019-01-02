@@ -8,7 +8,7 @@ spring:
       path: /console
 
 pvdata:
-  articles: articles_data.csv
+  articles: csv/articles_data.csv
 
 flyway:
   baseline-on-migrate: true

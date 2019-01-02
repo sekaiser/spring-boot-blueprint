@@ -1,16 +1,9 @@
 package de.seka.news.modules.articles.services.respositories;
 
-import de.seka.news.modules.articles.models.Article;
+import de.seka.news.modules.articles.models.ArticleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import java.util.List;
+public interface ArticleRepository extends JpaRepository<ArticleEntity, Long>, JpaSpecificationExecutor<ArticleEntity> {
 
-public interface ArticleRepository extends JpaRepository<Article, Long>, JpaSpecificationExecutor<Article> {
-
-    @Query(value = "SELECT a FROM #{#entityName} a "
-            + "WHERE a.keywords LIKE %:keywords%")
-    List<Article> findByKeywords(@Param(value = "keywords") String keywords);
 }
