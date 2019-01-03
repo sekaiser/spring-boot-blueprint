@@ -1,6 +1,6 @@
-package de.seka.news.modules.articles.services.respositories;
+package de.seka.news.modules.articles.jpa.specifications;
 
-import de.seka.news.modules.articles.models.ArticleEntity;
+import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;

@@ -1,7 +1,7 @@
 package de.seka.news.modules.articles.api;
 
 import de.seka.news.common.dto.Article;
-import de.seka.news.modules.articles.models.ArticleEntity;
+import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

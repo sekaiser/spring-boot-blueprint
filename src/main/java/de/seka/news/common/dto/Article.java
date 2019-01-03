@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -151,33 +152,35 @@ public class Article extends CommonDto {
          * @return The builder
          * @since 3.3.0
          */
-        public Builder withAuthors(@Nullable final List<String> authors) {
+        public Builder withAuthors(@Nullable final String authors) {
             this.bAuthors.clear();
-            if (authors != null) {
-                this.bAuthors.addAll(authors);
+            List<String> listOfAuthors = Arrays.asList(authors.split(","));
+            if (!listOfAuthors.isEmpty()) {
+                this.bAuthors.addAll(listOfAuthors);
             }
             return this;
         }
 
-        public Builder withKeywords(@Nullable final List<String> keywords) {
+        public Builder withKeywords(@Nullable final String keywords) {
             this.bKeywords.clear();
-            if (keywords != null) {
-                this.bKeywords.addAll(keywords);
+            List<String> listOfKeywords = Arrays.asList(keywords.split(","));
+            if (!listOfKeywords.isEmpty()) {
+                this.bKeywords.addAll(listOfKeywords);
             }
             return this;
         }
 
-        public Builder withHeader(@Nullable final String header) {
+        public Builder withHeader(final String header) {
             this.bHeader = header;
             return this;
         }
 
-        public Builder withDescription(@Nullable final String description) {
+        public Builder withDescription(final String description) {
             this.bDescription = description;
             return this;
         }
 
-        public Builder withText(@Nullable final String text) {
+        public Builder withText(final String text) {
             this.bText = text;
             return this;
         }

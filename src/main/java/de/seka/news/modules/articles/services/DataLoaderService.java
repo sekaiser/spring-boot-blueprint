@@ -1,7 +1,6 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.modules.articles.models.ArticleEntity;
-import de.seka.news.modules.articles.services.respositories.ArticleRepository;
+import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

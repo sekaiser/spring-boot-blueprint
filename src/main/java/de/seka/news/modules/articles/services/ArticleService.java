@@ -1,9 +1,8 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.common.dto.Article;
-import de.seka.news.modules.articles.models.ArticleEntity;
-import de.seka.news.modules.articles.services.respositories.ArticleRepository;
-import de.seka.news.modules.articles.services.respositories.ArticleSpecifications;
+import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
+import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
+import de.seka.news.modules.articles.jpa.specifications.ArticleSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,36 +17,36 @@ import static org.springframework.data.jpa.domain.Specification.where;
 @Transactional
 public class ArticleService {
 
-    private final ArticleRepository articleRepository;
+    private final JpaArticleRepository jpaArticleRepository;
 
     @Autowired
-    public ArticleService(final ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    public ArticleService(final JpaArticleRepository jpaArticleRepository) {
+        this.jpaArticleRepository = jpaArticleRepository;
     }
 
     public List<ArticleEntity> findAll() {
-        return this.articleRepository.findAll();
+        return this.jpaArticleRepository.findAll();
     }
 
     public List<ArticleEntity> findAll(Specification<ArticleEntity> specification) {
-        return articleRepository.findAll(where(specification));
+        return jpaArticleRepository.findAll(where(specification));
     }
 
     public List<ArticleEntity> findByKeywords(String keywords) {
-        return findByKeywords(keywords.split(",")).map(e -> this.articleRepository.findAll(where(e))).orElse(Collections.emptyList());
+        return findByKeywords(keywords.split(",")).map(e -> this.jpaArticleRepository.findAll(where(e))).orElse(Collections.emptyList());
     }
 
     public List<ArticleEntity> findByAuthors(String authors) {
-        return findByAuthors(authors.split(",")).map(e -> this.articleRepository.findAll(where(e))).orElse(Collections.emptyList());
+        return findByAuthors(authors.split(",")).map(e -> this.jpaArticleRepository.findAll(where(e))).orElse(Collections.emptyList());
     }
 
     public Optional<ArticleEntity> findByIdentifier(String identifier) {
-        return this.articleRepository.findOne(where(ArticleSpecifications.findByIdentifier(identifier)));
+        return this.jpaArticleRepository.findOne(where(ArticleSpecifications.findByIdentifier(identifier)));
     }
 
     public ArticleEntity save(ArticleEntity article) {
         article.setIdentifier(UUID.randomUUID().toString());
-        return this.articleRepository.save(article);
+        return this.jpaArticleRepository.save(article);
     }
 
     public Optional<Specification<ArticleEntity>> findByAuthors(String[] authors) {

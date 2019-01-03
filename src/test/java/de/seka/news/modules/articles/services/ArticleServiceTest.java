@@ -1,6 +1,6 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.modules.articles.models.ArticleEntity;
+import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
