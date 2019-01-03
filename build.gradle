@@ -35,6 +35,39 @@ task("addNewMigration") {
 	}
 }
 
+task unitTests(type: Test, group: "verification") {
+	useJUnit {
+		includeCategories "de.seka.news.test.categories.UnitTest"
+		excludeCategories "de.seka.news.test.categories.IntegrationTest"
+		excludeCategories "de.seka.news.test.categories.DocumentationTest"
+	}
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
+task integrationTests(type: Test, group: "verification") {
+	useJUnit {
+		includeCategories "de.seka.news.test.categories.IntegrationTest"
+		excludeCategories "de.seka.news.test.categories.UnitTest"
+		excludeCategories "de.seka.news.test.categories.DocumentationTest"
+	}
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
+task documentationTests(type: Test, group: "verification") {
+	useJUnit {
+		includeCategories "de.seka.news.test.categories.DocumentationTest"
+		excludeCategories "de.seka.news.test.categories.UnitTest"
+		excludeCategories "de.seka.news.test.categories.IntegrationTest"
+	}
+	outputs.upToDateWhen {
+		return false
+	}
+}
+
 dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
 	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
