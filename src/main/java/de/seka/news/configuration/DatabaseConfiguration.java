@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("de.seka.news.modules.articles.services.respositories")
+@EnableJpaRepositories("de.seka.news.modules.articles.jpa.repositories")
 class DatabaseConfiguration {
 
 }

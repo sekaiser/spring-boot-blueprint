@@ -49,6 +49,9 @@ public class DataLoaderService {
 
             ArticleEntity article;
             while ((article = beanReader.read(ArticleEntity.class, header, inverterProcessors)) != null) {
+                article.setUser("seka");
+                article.setName("article");
+                article.setVersion("1.0.0");
                 articleService.save(article);
             }
 
@@ -62,7 +65,6 @@ public class DataLoaderService {
 
     private static CellProcessor[] getArticlesProcessors() {
         final CellProcessor[] processors = new CellProcessor[] {
-                new Optional(), // identifier
                 new Optional(), // header
                 new Optional(), // description
                 new Optional(), // text

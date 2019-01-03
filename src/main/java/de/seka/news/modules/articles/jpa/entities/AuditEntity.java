@@ -26,11 +26,6 @@ public class AuditEntity extends IdEntity implements AuditProjection {
     @Column(name = "updated", nullable = false)
     private Instant updated = Instant.now();
 
-    @Version
-    @Column(name = "entity_version", nullable = false)
-    @Getter(AccessLevel.NONE)
-    private Integer entityVersion;
-
     /**
      * Updates the created and updated timestamps to be creation time.
      */

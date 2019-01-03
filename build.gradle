@@ -3,10 +3,13 @@ buildscript {
 		springBootVersion = '2.1.1.RELEASE'
 	}
 	repositories {
+		gradlePluginPortal()
+		jcenter()
 		mavenCentral()
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.franzbecker:gradle-lombok:1.14")
 	}
 }
 
@@ -14,6 +17,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'io.franzbecker.gradle-lombok'
 
 group = 'de.seka'
 version = '0.0.1-SNAPSHOT'

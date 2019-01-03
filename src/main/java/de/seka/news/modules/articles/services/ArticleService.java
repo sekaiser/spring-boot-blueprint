@@ -45,7 +45,6 @@ public class ArticleService {
     }
 
     public ArticleEntity save(ArticleEntity article) {
-        article.setIdentifier(UUID.randomUUID().toString());
         return this.jpaArticleRepository.save(article);
     }
 

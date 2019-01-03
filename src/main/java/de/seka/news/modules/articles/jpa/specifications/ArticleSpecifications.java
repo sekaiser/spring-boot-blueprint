@@ -18,6 +18,6 @@ public class ArticleSpecifications {
     }
 
     public static Specification<ArticleEntity> findByIdentifier(String identifier) {
-        return (Root<ArticleEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->  cb.equal(root.get("identifier"), identifier);
+        return (Root<ArticleEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->  cb.equal(root.get("uniqueId"), identifier);
     }
 }
