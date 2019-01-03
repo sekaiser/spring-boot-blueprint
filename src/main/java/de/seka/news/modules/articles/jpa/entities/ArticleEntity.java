@@ -1,6 +1,7 @@
 package de.seka.news.modules.articles.jpa.entities;
 
 import de.seka.news.modules.articles.jpa.entities.projections.ArticleProjection;
+import de.seka.news.modules.articles.jpa.entities.projections.ArticleSearchProjection;
 import lombok.*;
 import javax.persistence.*;
 import java.time.Instant;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Table(name = "articles")
 @Getter
 @Setter
-public class ArticleEntity extends BaseEntity implements ArticleProjection {
+public class ArticleEntity extends BaseEntity implements ArticleProjection, ArticleSearchProjection {
 
     private static final long serialVersionUID = 1566996076779823541L;
 

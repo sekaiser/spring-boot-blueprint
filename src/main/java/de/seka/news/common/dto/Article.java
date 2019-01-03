@@ -64,18 +64,6 @@ public class Article extends CommonDto {
         return Optional.ofNullable(this.authors);
     }
 
-    public Optional<String> getHeader() {
-        return Optional.ofNullable(this.header);
-    }
-
-    public Optional<String> getDescription() {
-        return Optional.ofNullable(this.description);
-    }
-
-    public Optional<String> getText() {
-        return Optional.ofNullable(this.text);
-    }
-
     /**
      * A builder to create jobs.
      *

@@ -9,9 +9,7 @@ import javax.annotation.Nullable;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 @Getter
 public abstract class CommonDto extends BaseDto {
@@ -27,8 +25,6 @@ public abstract class CommonDto extends BaseDto {
     @NotEmpty(message = "A name is required and must be at most 255 characters")
     @Size(max = 255, message = "The name can be no longer than 255 characters")
     private final String name;
-    @Size(max = 1000, message = "The description can be no longer than 1000 characters")
-    private final String description;
     private final JsonNode metadata;
 
     /**
@@ -41,17 +37,7 @@ public abstract class CommonDto extends BaseDto {
         this.name = builder.bName;
         this.user = builder.bUser;
         this.version = builder.bVersion;
-        this.description = builder.bDescription;
         this.metadata = builder.bMetadata;
-    }
-
-    /**
-     * Get the description.
-     *
-     * @return The description as an optional
-     */
-    public Optional<String> getDescription() {
-        return Optional.ofNullable(this.description);
     }
 
     /**
@@ -78,25 +64,12 @@ public abstract class CommonDto extends BaseDto {
         private final String bName;
         private final String bUser;
         private final String bVersion;
-        private String bDescription;
         private JsonNode bMetadata;
-        private Set<String> bTags = new HashSet<>();
 
         protected Builder(final String name, final String user, final String version) {
             this.bName = name;
             this.bUser = user;
             this.bVersion = version;
-        }
-
-        /**
-         * Set the description for the resource.
-         *
-         * @param description The description to use
-         * @return The builder
-         */
-        public T withDescription(@Nullable final String description) {
-            this.bDescription = description;
-            return (T) this;
         }
 
         /**
