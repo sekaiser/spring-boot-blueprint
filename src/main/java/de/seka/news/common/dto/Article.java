@@ -3,9 +3,6 @@ package de.seka.news.common.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import de.seka.news.common.util.TimeUtils;
 import lombok.Getter;
 import org.apache.tomcat.util.buf.StringUtils;
 
@@ -13,8 +10,6 @@ import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,13 +33,6 @@ public class Article extends CommonDto {
     @Size(max = 255, message = "Max length of authors is 255 characters")
     private final String authors;
 
-    private final Instant started;
-    private final Instant finished;
-
-    @NotNull
-    @JsonSerialize(using = ToStringSerializer.class)
-    private final Duration runtime;
-
     /**
      * Constructor used by the builder.
      *
@@ -61,10 +49,6 @@ public class Article extends CommonDto {
         this.header = builder.bHeader;
         this.description = builder.bDescription;
         this.text = builder.bText;
-        this.started = builder.bStarted;
-        this.finished = builder.bFinished;
-
-        this.runtime = TimeUtils.getDuration(this.started, this.finished);
     }
 
     /**
@@ -93,24 +77,6 @@ public class Article extends CommonDto {
     }
 
     /**
-     * Get the time the job started.
-     *
-     * @return The started time or null if not set
-     */
-    public Optional<Instant> getStarted() {
-        return Optional.ofNullable(this.started);
-    }
-
-    /**
-     * Get the time the job finished.
-     *
-     * @return The finished time or null if not set
-     */
-    public Optional<Instant> getFinished() {
-        return Optional.ofNullable(this.finished);
-    }
-
-    /**
      * A builder to create jobs.
      *
      * @author tgianos
@@ -120,8 +86,6 @@ public class Article extends CommonDto {
 
         private final List<String> bAuthors;
         private final List<String> bKeywords;
-        private Instant bStarted;
-        private Instant bFinished;
         private String bHeader;
         private String bDescription;
         private String bText;
@@ -182,28 +146,6 @@ public class Article extends CommonDto {
 
         public Builder withText(final String text) {
             this.bText = text;
-            return this;
-        }
-
-        /**
-         * Set the started time of the job.
-         *
-         * @param started The started time of the job
-         * @return The builder
-         */
-        public Builder withStarted(@Nullable final Instant started) {
-            this.bStarted = started;
-            return this;
-        }
-
-        /**
-         * Set the finished time of the job.
-         *
-         * @param finished The time the job finished
-         * @return The builder
-         */
-        public Builder withFinished(@Nullable final Instant finished) {
-            this.bFinished = finished;
             return this;
         }
 

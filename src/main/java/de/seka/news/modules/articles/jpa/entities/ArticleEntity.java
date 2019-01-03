@@ -1,15 +1,17 @@
 package de.seka.news.modules.articles.jpa.entities;
 
+import de.seka.news.modules.articles.jpa.entities.projections.ArticleProjection;
 import lombok.*;
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.Optional;
 
 @Entity
-@ToString(callSuper = true, of = {"header", "description", "text", "keywords", "authors"})
+@ToString(callSuper = true, of = {"header", "description", "text", "keywords", "authors", "published"})
 @Table(name = "articles")
 @Getter
 @Setter
-public class ArticleEntity extends BaseEntity {
+public class ArticleEntity extends BaseEntity implements ArticleProjection {
 
     private static final long serialVersionUID = 1566996076779823541L;
 
@@ -22,6 +24,9 @@ public class ArticleEntity extends BaseEntity {
     @Basic(optional = false)
     @Column(columnDefinition = "TEXT")
     private String text;
+    @Basic
+    @Column(name = "published")
+    private Instant published;
 
     // assumption: keywords are separated by spaces
     @Basic
@@ -43,6 +48,10 @@ public class ArticleEntity extends BaseEntity {
 
     public Optional<String> getKeywords() {
         return Optional.ofNullable(this.keywords);
+    }
+
+    public Optional<Instant> getPublished() {
+        return Optional.ofNullable(this.published);
     }
 
     /**

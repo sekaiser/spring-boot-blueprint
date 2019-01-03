@@ -17,7 +17,8 @@ public class ArticleSpecifications {
         return (Root<ArticleEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->  cb.like(root.get("authors"), "%"+author+"%");
     }
 
-    public static Specification<ArticleEntity> findByIdentifier(String identifier) {
-        return (Root<ArticleEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->  cb.equal(root.get("uniqueId"), identifier);
+    public static Specification<ArticleEntity> findByUniqueId(String uniqueId) {
+        return (Root<ArticleEntity> root, CriteriaQuery<?> query, CriteriaBuilder cb) ->  cb.equal(root.get("uniqueId"), uniqueId);
     }
+
 }

@@ -1,6 +1,8 @@
 package de.seka.news.modules.articles.services;
 
+import de.seka.news.common.dto.Article;
 import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
+import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,14 +25,14 @@ public class DataLoaderService {
 
     private final String pvDataArticlesCsv;
 
-    private final ArticleService articleService;
+    private final JpaArticleRepository articleRepository;
 
     @Autowired
     public DataLoaderService(
-            final ArticleService articleService,
+            final JpaArticleRepository articleRepository,
             @Value("${pvdata.articles}") final String pvDataArticlesCsv
     ) {
-        this.articleService = articleService;
+        this.articleRepository = articleRepository;
         this.pvDataArticlesCsv = pvDataArticlesCsv;
     }
 
@@ -52,7 +54,7 @@ public class DataLoaderService {
                 article.setUser("seka");
                 article.setName("article");
                 article.setVersion("1.0.0");
-                articleService.save(article);
+                articleRepository.save(article);
             }
 
         }

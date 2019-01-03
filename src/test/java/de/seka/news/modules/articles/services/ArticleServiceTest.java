@@ -1,6 +1,8 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
+import de.seka.news.common.dto.Article;
+import de.seka.news.common.exceptions.MttrbitException;
+import de.seka.news.modules.articles.jpa.specifications.ArticleSpecificationBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import static org.hamcrest.Matchers.empty;
 public class ArticleServiceTest {
 
     @Autowired
-    ArticleService service;
+    ArticleSearchService service;
 
     @Test
     public void findAll_shouldReturnnonEmptyResult() {
@@ -27,29 +29,34 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void findByKeywords_empty() {
-        assertThat(service.findByKeywords("tester"), is(empty()));
+    public void findByKeywords_empty() throws MttrbitException {
+        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+                .withAuthors("tester");
+        List<Article> result = service.findArticles(builder);
+        assertThat(result, is(empty()));
     }
 
     @Test
-    public void findByKeywords_notEmpty() {
-        assertThat(service.findByKeywords("test"), is(not(empty())));
+    public void findByKeywords_notEmpty() throws MttrbitException {
+        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+                .withKeywords("test");
+        List<Article> result = service.findArticles(builder);
+        assertThat(result, is(not(empty())));
     }
 
     @Test
-    public void findByAuthors_empty() {
-        assertThat(service.findByAuthors("Brooks"), is(empty()));
+    public void findByAuthors_empty() throws MttrbitException {
+        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+                .withAuthors("Brooks");
+        List<Article> result = service.findArticles(builder);
+        assertThat(result, is(empty()));
     }
 
     @Test
-    public void findByAuthors_notEmpty() {
-        assertThat(service.findByAuthors("King"), is(not(empty())));
-    }
-
-    @Test
-    public void findByAuthorSpec_notEmpty() {
-        List<ArticleEntity> result = service.findByAuthors("King");
-        System.out.println(result);
+    public void findByAuthorSpec_notEmpty() throws MttrbitException {
+        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+                .withAuthors("King");
+        List<Article> result = service.findArticles(builder);
         assertThat(result, is(not(empty())));
     }
 }

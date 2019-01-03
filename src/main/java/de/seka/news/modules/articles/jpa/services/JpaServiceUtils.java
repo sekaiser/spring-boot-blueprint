@@ -2,6 +2,7 @@ package de.seka.news.modules.articles.jpa.services;
 
 import de.seka.news.common.dto.Article;
 import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
+import de.seka.news.modules.articles.jpa.entities.projections.ArticleProjection;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -11,6 +12,25 @@ import lombok.extern.slf4j.Slf4j;
 public final class JpaServiceUtils {
 
     private JpaServiceUtils() {
+    }
+
+    static Article toArticleDto(final ArticleProjection articleProjection) {
+        final Article.Builder builder = new Article.Builder(
+                articleProjection.getName(),
+                articleProjection.getUser(),
+                articleProjection.getVersion()
+        )
+                .withHeader(articleProjection.getHeader())
+                .withDescription(articleProjection.getDescription())
+                .withText(articleProjection.getText())
+                .withId(articleProjection.getUniqueId())
+                .withCreated(articleProjection.getCreated())
+                .withUpdated(articleProjection.getUpdated());
+
+        articleProjection.getAuthors().ifPresent(builder::withAuthors);
+        articleProjection.getKeywords().ifPresent(builder::withKeywords);
+
+        return builder.build();
     }
 
     static Article toArticleDto(final ArticleEntity articleEntity) {

@@ -1,6 +1,7 @@
 package de.seka.news.hateos.assemblers;
 
 import de.seka.news.common.dto.Article;
+import de.seka.news.common.exceptions.MttrbitException;
 import de.seka.news.hateos.resources.ArticleResource;
 import de.seka.news.modules.articles.api.ArticleController;
 import org.springframework.hateoas.ResourceAssembler;
@@ -18,10 +19,15 @@ public class ArticleResourceAssembler implements ResourceAssembler<Article, Arti
         final String id = article.getId().orElseThrow(IllegalArgumentException::new);
         final ArticleResource articleResource = new ArticleResource(article);
 
-        articleResource.add(ControllerLinkBuilder.linkTo(
-                ControllerLinkBuilder.methodOn(ArticleController.class).getArticle(id)
-        ).withSelfRel());
+        try {
 
+            articleResource.add(ControllerLinkBuilder.linkTo(
+                    ControllerLinkBuilder.methodOn(ArticleController.class).getArticle(id)
+            ).withSelfRel());
+        } catch (final MttrbitException me) {
+            // If we can't convert it we might as well force a server exception
+            throw new RuntimeException(me);
+        }
         return articleResource;
     }
 }

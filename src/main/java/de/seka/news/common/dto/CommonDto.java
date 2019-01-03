@@ -67,8 +67,6 @@ public abstract class CommonDto extends BaseDto {
      * Builder pattern to save constructor arguments.
      *
      * @param <T> Type of builder that extends this
-     * @author tgianos
-     * @since 3.0.0
      */
     // NOTE: These abstract class builders are marked public not protected due to a JDK bug from 1999 which caused
     //       issues with Clojure clients which use reflection to make the Java API calls.
