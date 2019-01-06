@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * Utility methods for JPA services.
  */
 @Slf4j
-public final class JpaServiceUtils {
+final class JpaServiceUtils {
 
     private JpaServiceUtils() {
     }

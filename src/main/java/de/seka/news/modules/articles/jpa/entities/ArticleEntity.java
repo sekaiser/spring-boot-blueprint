@@ -2,8 +2,14 @@ package de.seka.news.modules.articles.jpa.entities;
 
 import de.seka.news.modules.articles.jpa.entities.projections.ArticleProjection;
 import de.seka.news.modules.articles.jpa.entities.projections.ArticleSearchProjection;
-import lombok.*;
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.Instant;
 import java.util.Optional;
 

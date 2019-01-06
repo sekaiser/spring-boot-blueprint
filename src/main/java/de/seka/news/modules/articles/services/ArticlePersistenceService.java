@@ -9,5 +9,5 @@ import javax.validation.constraints.NotNull;
 @Validated
 public interface ArticlePersistenceService {
 
-    void createArticle(@NotNull final Article article) throws MttrbitException;
+    void createArticle(@NotNull Article article) throws MttrbitException;
 }

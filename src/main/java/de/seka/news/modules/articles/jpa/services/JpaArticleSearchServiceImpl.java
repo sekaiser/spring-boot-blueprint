@@ -31,7 +31,9 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
     }
 
     @Override
-    public Article getArticle(@NotBlank(message = "No id entered. Unable to get article.") String id) throws MttrbitException {
+    public Article getArticle(
+            @NotBlank(message = "No id entered. Unable to get article.") final String id
+    ) throws MttrbitException {
         return JpaServiceUtils.toArticleDto(
                 articleRepository
                         .findByUniqueId(id, ArticleProjection.class)
@@ -49,7 +51,7 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
     }
 
     @Override
-    public List<Article> findArticles(ArticleSpecificationBuilder builder) {
+    public List<Article> findArticles(final ArticleSpecificationBuilder builder) {
         return builder.build()
                 .map(spec -> articleRepository.findAll(where(spec)).stream().map(JpaServiceUtils::toArticleDto).collect(Collectors.toList()))
                 .orElseGet(Collections::emptyList);

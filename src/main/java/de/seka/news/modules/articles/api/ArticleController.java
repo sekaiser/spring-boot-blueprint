@@ -8,7 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"/articles", "/v1/articles"})
@@ -28,7 +32,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ArticleResource getArticle(@PathVariable(name = "id") String uniqueId) throws MttrbitException {
+    public ArticleResource getArticle(@PathVariable(name = "id") final String uniqueId) throws MttrbitException {
         return assembler.toResource(articleService.getArticle(uniqueId));
     }
 }

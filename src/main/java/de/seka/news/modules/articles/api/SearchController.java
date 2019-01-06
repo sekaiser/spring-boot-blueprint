@@ -32,13 +32,14 @@ public class SearchController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public List<ArticleResource> fetchAll(
-            @RequestParam(name = "authors", required = false) String authors,
-            @RequestParam(name = "keywords", required = false) String keywords
-    )  throws MttrbitException {
-        if (authors == null && keywords == null)
+            @RequestParam(name = "authors", required = false) final String authors,
+            @RequestParam(name = "keywords", required = false) final String keywords
+    ) throws MttrbitException {
+        if (authors == null && keywords == null) {
             return articleService.findAll().stream().map(assembler::toResource).collect(Collectors.toList());
-
-        return articleService.findArticles(new ArticleSpecificationBuilder().withAuthors(authors).withKeywords(keywords))
+        }
+        return articleService
+                .findArticles(new ArticleSpecificationBuilder().withAuthors(authors).withKeywords(keywords))
                 .stream()
                 .map(assembler::toResource)
                 .collect(Collectors.toList());

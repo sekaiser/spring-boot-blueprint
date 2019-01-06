@@ -9,7 +9,7 @@ import java.util.List;
 public interface DtoConverters {
 
     static Article toArticle(final ArticleEntity entity) {
-        Article.Builder builder = new Article.Builder("seka", "seka", "1.0.0")
+        final Article.Builder builder = new Article.Builder("seka", "seka", "1.0.0")
                 .withId(entity.getUniqueId())
                 .withHeader(entity.getHeader())
                 .withDescription(entity.getDescription())
@@ -22,7 +22,7 @@ public interface DtoConverters {
     }
 
     static List<Article> toArticles(final List<ArticleEntity> entities) {
-        List<Article> articles = new ArrayList<>();
+        final List<Article> articles = new ArrayList<>();
         entities.forEach(e -> articles.add(toArticle(e)));
         return articles;
     }

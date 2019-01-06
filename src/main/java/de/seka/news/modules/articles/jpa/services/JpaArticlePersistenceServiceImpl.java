@@ -18,7 +18,7 @@ public class JpaArticlePersistenceServiceImpl extends JpaBaseService implements 
     }
 
     @Override
-    public void createArticle(@NotNull Article article) throws MttrbitException {
+    public void createArticle(@NotNull final Article article) throws MttrbitException {
 
     }
 }

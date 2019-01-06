@@ -1,7 +1,6 @@
 package de.seka.news.modules.articles.jpa.services;
 
 import de.seka.news.modules.articles.jpa.entities.UniqueIdEntity;
-import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

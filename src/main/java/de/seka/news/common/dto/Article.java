@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Read only data transfer object representing an Article.
+ */
 @Getter
 @JsonDeserialize(builder = Article.Builder.class)
 public class Article extends CommonDto {
@@ -52,7 +55,7 @@ public class Article extends CommonDto {
     }
 
     /**
-     * Get the arguments to be put on the command line along with the command executable.
+     * Get the keywords.
      *
      * @return The command arguments
      */
@@ -84,7 +87,6 @@ public class Article extends CommonDto {
          * @param name    The name to use for the Job
          * @param user    The user to use for the Job
          * @param version The version to use for the Job
-         * @since 3.3.0
          */
         @JsonCreator
         public Builder(
@@ -102,11 +104,10 @@ public class Article extends CommonDto {
          *
          * @param authors The command args
          * @return The builder
-         * @since 3.3.0
          */
         public Builder withAuthors(@Nullable final String authors) {
             this.bAuthors.clear();
-            List<String> listOfAuthors = Arrays.asList(authors.split(","));
+            final List<String> listOfAuthors = Arrays.asList(authors.split(","));
             if (!listOfAuthors.isEmpty()) {
                 this.bAuthors.addAll(listOfAuthors);
             }
@@ -115,7 +116,7 @@ public class Article extends CommonDto {
 
         public Builder withKeywords(@Nullable final String keywords) {
             this.bKeywords.clear();
-            List<String> listOfKeywords = Arrays.asList(keywords.split(","));
+            final List<String> listOfKeywords = Arrays.asList(keywords.split(","));
             if (!listOfKeywords.isEmpty()) {
                 this.bKeywords.addAll(listOfKeywords);
             }
