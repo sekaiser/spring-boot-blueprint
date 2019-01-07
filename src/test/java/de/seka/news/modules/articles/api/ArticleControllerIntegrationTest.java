@@ -89,7 +89,7 @@ public class ArticleControllerIntegrationTest extends RestControllerIntegrationT
         return this.getIdFromLocation(
                 RestAssured
                         .given(this.getRequestSpecification())
-                        //.filter(createResultFilter)
+                        .filter(createResultFilter)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .body(MttrbitObjectMapper.getMapper().writeValueAsBytes(article))
                         .when()
