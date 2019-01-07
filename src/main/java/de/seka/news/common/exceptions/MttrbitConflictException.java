@@ -3,7 +3,7 @@ package de.seka.news.common.exceptions;
 import java.net.HttpURLConnection;
 
 /**
- * Extension of a GenieException for all conflict failures.
+ * Extension of a MttrbitException for all conflict failures.
  */
 public class MttrbitConflictException extends MttrbitException {
 

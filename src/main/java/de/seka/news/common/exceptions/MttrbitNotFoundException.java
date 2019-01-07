@@ -2,6 +2,9 @@ package de.seka.news.common.exceptions;
 
 import java.net.HttpURLConnection;
 
+/**
+ * Extension of MttrbitExtension for all not found exceptions.
+ */
 public class MttrbitNotFoundException extends MttrbitException {
     /**
      * Constructor.

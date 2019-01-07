@@ -1,8 +1,8 @@
 package de.seka.news.modules.articles.api;
 
 import de.seka.news.common.exceptions.MttrbitException;
-import de.seka.news.hateos.assemblers.ArticleResourceAssembler;
-import de.seka.news.hateos.resources.ArticleResource;
+import de.seka.news.hateoas.assemblers.ArticleResourceAssembler;
+import de.seka.news.hateoas.resources.ArticleResource;
 import de.seka.news.modules.articles.services.ArticleSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -26,10 +26,18 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
 
     private final JpaArticleRepository articleRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param articleRepository The article repository.
+     */
     public JpaArticleSearchServiceImpl(final JpaArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Article getArticle(
             @NotBlank(message = "No id entered. Unable to get article.") final String id
@@ -40,27 +48,41 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
                         .orElseThrow(() -> new MttrbitNotFoundException("No article with id " + id)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> getPublishedArticles() throws MttrbitException {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> getUnpublishedArticles() throws MttrbitException {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> findArticles(final ArticleSpecificationBuilder builder) {
         return builder.build()
-                .map(spec -> articleRepository.findAll(where(spec)).stream().map(JpaServiceUtils::toArticleDto).collect(Collectors.toList()))
+                .map(spec -> articleRepository
+                        .findAll(where(spec))
+                        .stream()
+                        .map(JpaServiceUtils::toArticleDto)
+                        .collect(Collectors.toList()))
                 .orElseGet(Collections::emptyList);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> findAll() {
         return articleRepository.findAll().stream().map(JpaServiceUtils::toArticleDto).collect(Collectors.toList());
     }
-
-
 }

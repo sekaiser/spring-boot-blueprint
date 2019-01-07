@@ -1,8 +1,8 @@
 package de.seka.news.modules.articles.api;
 
 import de.seka.news.common.exceptions.MttrbitException;
-import de.seka.news.hateos.assemblers.ArticleResourceAssembler;
-import de.seka.news.hateos.resources.ArticleResource;
+import de.seka.news.hateoas.assemblers.ArticleResourceAssembler;
+import de.seka.news.hateoas.resources.ArticleResource;
 import de.seka.news.modules.articles.jpa.specifications.ArticleSpecificationBuilder;
 import de.seka.news.modules.articles.services.ArticleSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * REST endpoint for searching articles.
+ */
 @RestController
 @RequestMapping({"/articles", "/v1/articles"})
 public class SearchController {
@@ -21,6 +24,12 @@ public class SearchController {
     private final ArticleSearchService articleService;
     private final ArticleResourceAssembler assembler;
 
+    /**
+     * Constructor.
+     *
+     * @param articleService the article search service
+     * @param assembler the article resource assembler
+     */
     @Autowired
     public SearchController(
             final ArticleSearchService articleService,
@@ -30,6 +39,14 @@ public class SearchController {
         this.assembler = assembler;
     }
 
+    /**
+     * Search for articles.
+     *
+     * @param authors   criteria to search by authors
+     * @param keywords  criteria to search by keywords
+     * @return The list of articles matching the search criteria
+     * @throws MttrbitException
+     */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public List<ArticleResource> fetchAll(
             @RequestParam(name = "authors", required = false) final String authors,

@@ -7,10 +7,23 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public class ArticleSpecifications {
+/**
+ * Utility methods for creating article specific specifications.
+ */
+public final class ArticleSpecifications {
 
-    private ArticleSpecifications() {}
+    /**
+     * Constructor.
+     */
+    private ArticleSpecifications() {
+    }
 
+    /**
+     * Get a specification filtering articles by keyword.
+     *
+     * @param keyword the keyword to filter for
+     * @return The specification
+     */
     public static Specification<ArticleEntity> findByKeyword(final String keyword) {
         return (
                 Root<ArticleEntity> root,
@@ -19,6 +32,12 @@ public class ArticleSpecifications {
         ) -> cb.like(root.get("keywords"), "%" + keyword + "%");
     }
 
+    /**
+     * Get a specification filtering articles by author.
+     *
+     * @param author the keyword to filter for
+     * @return The specification
+     */
     public static Specification<ArticleEntity> findByAuthor(final String author) {
         return (
                 Root<ArticleEntity> root,
@@ -27,6 +46,12 @@ public class ArticleSpecifications {
         ), "%" + author + "%");
     }
 
+    /**
+     * Get a specification filtering articles by unique id.
+     *
+     * @param uniqueId the uuid to filter for
+     * @return The specification
+     */
     public static Specification<ArticleEntity> findByUniqueId(final String uniqueId) {
         return (
                 Root<ArticleEntity> root,

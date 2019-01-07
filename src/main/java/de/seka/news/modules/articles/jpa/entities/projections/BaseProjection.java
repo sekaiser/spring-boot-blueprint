@@ -2,12 +2,15 @@ package de.seka.news.modules.articles.jpa.entities.projections;
 
 import java.util.Optional;
 
+/**
+ * A projection just for returning the base fields of a given entity.
+ */
 public interface BaseProjection extends UniqueIdProjection {
 
     /**
      * Get the version.
      *
-     * @return The version of the resource (job, app, etc)
+     * @return The version of the resource
      */
     String getVersion();
 

@@ -4,6 +4,9 @@ import javax.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 
+/**
+ * Utility methods for dealing with time. Particularly duration.
+ */
 public interface TimeUtils {
 
     /**

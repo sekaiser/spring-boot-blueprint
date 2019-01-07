@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ * Auto configuration of JPA related services and beans.
+ */
 @Configuration
 @EnableJpaRepositories("de.seka.news.modules.articles.jpa.repositories")
 @EntityScan("de.seka.news.modules.articles.jpa.entities")
