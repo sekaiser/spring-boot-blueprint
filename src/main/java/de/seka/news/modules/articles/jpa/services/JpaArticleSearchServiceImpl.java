@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.jpa.domain.Specification.where;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * JPA implementation of the Article Search Service.
@@ -71,7 +71,7 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
     public List<Article> findArticles(final ArticleSpecificationBuilder builder) {
         return builder.build()
                 .map(spec -> articleRepository
-                        .findAll(where(spec))
+                        .findAll(Specification.where(spec))
                         .stream()
                         .map(JpaServiceUtils::toArticleDto)
                         .collect(Collectors.toList()))

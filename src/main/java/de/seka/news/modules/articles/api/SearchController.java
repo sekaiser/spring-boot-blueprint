@@ -45,7 +45,7 @@ public class SearchController {
      * @param authors   criteria to search by authors
      * @param keywords  criteria to search by keywords
      * @return The list of articles matching the search criteria
-     * @throws MttrbitException
+     * @throws MttrbitException if there was an error
      */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public List<ArticleResource> fetchAll(

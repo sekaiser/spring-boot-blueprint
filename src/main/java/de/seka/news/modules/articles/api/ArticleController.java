@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST endpoint for articles.
+ */
 @RestController
 @RequestMapping({"/articles", "/v1/articles"})
 @Slf4j
@@ -21,6 +24,12 @@ public class ArticleController {
     private final ArticleSearchService articleService;
     private final ArticleResourceAssembler assembler;
 
+    /**
+     * Constructor.
+     *
+     * @param articleService The article service to use
+     * @param assembler      Assemble article resources out of articles
+     */
     @Autowired
     public ArticleController(
             final ArticleSearchService articleService,
@@ -30,6 +39,13 @@ public class ArticleController {
         this.assembler = assembler;
     }
 
+    /**
+     * Fetch the article to an id.
+     *
+     * @param uniqueId The uuid of the article
+     * @return the article
+     * @throws MttrbitException if there was an error
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaTypes.HAL_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ArticleResource getArticle(@PathVariable(name = "id") final String uniqueId) throws MttrbitException {
