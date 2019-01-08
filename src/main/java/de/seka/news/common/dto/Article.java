@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Getter;
 import org.apache.tomcat.util.buf.StringUtils;
 
-import javax.annotation.Nullable;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -107,7 +106,7 @@ public class Article extends CommonDto {
          * @param authors The authors
          * @return The builder
          */
-        public Builder withAuthors(@Nullable final String authors) {
+        public Builder withAuthors(final String authors) {
             this.bAuthors.clear();
             final List<String> listOfAuthors = Arrays.asList(authors.split(","));
             if (!listOfAuthors.isEmpty()) {
@@ -122,7 +121,7 @@ public class Article extends CommonDto {
          * @param keywords The keywords
          * @return The builder
          */
-        public Builder withKeywords(@Nullable final String keywords) {
+        public Builder withKeywords(final String keywords) {
             this.bKeywords.clear();
             final List<String> listOfKeywords = Arrays.asList(keywords.split(","));
             if (!listOfKeywords.isEmpty()) {

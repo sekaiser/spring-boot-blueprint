@@ -6,9 +6,12 @@ import org.junit.experimental.categories.Category;
 
 import java.io.IOException;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 
+/**
+ * Unit test exceptions.
+ */
 @Category(UnitTest.class)
 public class MttrbitExceptionUnitTests {
 
@@ -24,9 +27,9 @@ public class MttrbitExceptionUnitTests {
     @Test(expected = MttrbitException.class)
     public void testThreeArgConstructor() throws MttrbitException {
         final MttrbitException me = new MttrbitException(ERROR_CODE, ERROR_MESSAGE, IOE);
-        assertThat(ERROR_CODE, is(me.getErrorCode()));
-        assertThat(ERROR_MESSAGE, is(me.getMessage()));
-        assertThat(IOE, is(me.getCause()));
+        MatcherAssert.assertThat(ERROR_CODE, Matchers.is(me.getErrorCode()));
+        MatcherAssert.assertThat(ERROR_MESSAGE, Matchers.is(me.getMessage()));
+        MatcherAssert.assertThat(IOE, Matchers.is(me.getCause()));
         throw me;
     }
 
@@ -38,9 +41,9 @@ public class MttrbitExceptionUnitTests {
     @Test(expected = MttrbitException.class)
     public void testTwoArgConstructorWithMessage() throws MttrbitException {
         final MttrbitException me = new MttrbitException(ERROR_CODE, ERROR_MESSAGE);
-        assertThat(ERROR_CODE, is(me.getErrorCode()));
-        assertThat(ERROR_MESSAGE, is(me.getMessage()));
-        assertThat(me.getCause(), is(nullValue()));
+        MatcherAssert.assertThat(ERROR_CODE, Matchers.is(me.getErrorCode()));
+        MatcherAssert.assertThat(ERROR_MESSAGE, Matchers.is(me.getMessage()));
+        MatcherAssert.assertThat(me.getCause(), Matchers.is(Matchers.nullValue()));
         throw me;
     }
 }

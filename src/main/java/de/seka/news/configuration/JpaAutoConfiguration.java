@@ -1,7 +1,9 @@
 package de.seka.news.configuration;
 
 import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
+import de.seka.news.modules.articles.jpa.services.JpaArticlePersistenceServiceImpl;
 import de.seka.news.modules.articles.jpa.services.JpaArticleSearchServiceImpl;
+import de.seka.news.modules.articles.services.ArticlePersistenceService;
 import de.seka.news.modules.articles.services.ArticleSearchService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -31,4 +33,17 @@ public class JpaAutoConfiguration {
         return new JpaArticleSearchServiceImpl(articleRepository);
     }
 
+    /**
+     * Get a JPA implementation of the {@link ArticlePersistenceService} if one didn't already exist.
+     *
+     * @param articleRepository     The repository to use for article entities
+     * @return A {@link JpaArticlePersistenceServiceImpl} instance
+     */
+    @Bean
+    @ConditionalOnMissingBean(ArticlePersistenceService.class)
+    public JpaArticlePersistenceServiceImpl articlePersistenceService(
+            final JpaArticleRepository articleRepository
+    ) {
+        return new JpaArticlePersistenceServiceImpl(articleRepository);
+    }
 }

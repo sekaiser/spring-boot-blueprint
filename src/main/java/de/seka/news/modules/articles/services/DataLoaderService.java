@@ -17,6 +17,7 @@ import org.supercsv.prefs.CsvPreference;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Loading service to insert test data into test database.
@@ -51,7 +52,7 @@ public final class DataLoaderService {
         try {
             final Resource resource = new ClassPathResource(pvDataArticlesCsv);
             beanReader = new CsvBeanReader(
-                    new InputStreamReader(resource.getInputStream()),
+                    new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8.name()),
                     CsvPreference.STANDARD_PREFERENCE);
 
             final String[] header = beanReader.getHeader(true);
@@ -72,13 +73,12 @@ public final class DataLoaderService {
     }
 
     private static CellProcessor[] getArticlesProcessors() {
-        final CellProcessor[] processors = new CellProcessor[]{
+        return new CellProcessor[]{
                 new Optional(), // header
                 new Optional(), // description
                 new Optional(), // text
                 new Optional(), // keywords
                 new Optional(), // authors
         };
-        return processors;
     }
 }
