@@ -15,9 +15,9 @@ public class IntegrationTestActiveProfilesResolver implements ActiveProfilesReso
     private static final String POSTGRESQL = "postgresql";
     private static final String H2 = "h2";
     private final Set<String> knownDatabaseProfiles = Sets.newHashSet(
-            MYSQL,
-            POSTGRESQL,
-            H2
+        MYSQL,
+        POSTGRESQL,
+        H2
     );
 
     /**
@@ -32,9 +32,9 @@ public class IntegrationTestActiveProfilesResolver implements ActiveProfilesReso
         }
 
         return new String[]{
-                "integration",
-                "db",
-                "db-" + integrationTestDatabase,
+            "integration",
+            "db",
+            "db-" + integrationTestDatabase,
         };
     }
 }

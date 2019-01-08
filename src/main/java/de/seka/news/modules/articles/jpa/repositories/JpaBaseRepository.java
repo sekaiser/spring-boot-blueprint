@@ -11,7 +11,7 @@ import java.util.Optional;
  * @param <E> The entity class to act on which must extend BaseEntity
  */
 @NoRepositoryBean
-public interface JpaBaseRepository <E extends BaseEntity> extends JpaIdRepository<E> {
+public interface JpaBaseRepository<E extends BaseEntity> extends JpaIdRepository<E> {
 
     /**
      * Find an entity by its unique id.

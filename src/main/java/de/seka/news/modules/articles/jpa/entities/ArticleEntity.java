@@ -2,11 +2,20 @@ package de.seka.news.modules.articles.jpa.entities;
 
 import de.seka.news.modules.articles.jpa.entities.projections.ArticleProjection;
 import de.seka.news.modules.articles.jpa.entities.projections.ArticleSearchProjection;
-import lombok.*;
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.Instant;
 import java.util.Optional;
 
+/**
+ * The article entity.
+ */
 @Entity
 @ToString(callSuper = true, of = {"header", "description", "text", "keywords", "authors", "published"})
 @Table(name = "articles")
@@ -39,18 +48,33 @@ public class ArticleEntity extends BaseEntity implements ArticleProjection, Arti
     @Column
     private String authors;
 
+    /**
+     * Constructor.
+     */
     public ArticleEntity() {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @java.lang.Override
     public Optional<String> getAuthors() {
         return Optional.ofNullable(this.authors);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @java.lang.Override
     public Optional<String> getKeywords() {
         return Optional.ofNullable(this.keywords);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @java.lang.Override
     public Optional<Instant> getPublished() {
         return Optional.ofNullable(this.published);
     }

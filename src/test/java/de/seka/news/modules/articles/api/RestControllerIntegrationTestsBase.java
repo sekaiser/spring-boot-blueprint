@@ -57,19 +57,19 @@ public abstract class RestControllerIntegrationTestsBase {
     private RequestSpecification requestSpecification;
 
     private static String getLinkedResourceExpectedUri(
-            final String entityApi,
-            final String entityId,
-            final Set<String> halParams,
-            final String linkedEntityType
+        final String entityApi,
+        final String entityId,
+        final Set<String> halParams,
+        final String linkedEntityType
     ) {
         final String uriPath = entityApi + "/" + entityId + "/" + linkedEntityType;
 
         final StringBuilder builder = new StringBuilder();
         if (halParams != null && !halParams.isEmpty()) {
             builder
-                    .append("{?")
-                    .append(StringUtils.join(halParams, ","))
-                    .append("}");
+                .append("{?")
+                .append(StringUtils.join(halParams, ","))
+                .append("}");
         }
 
         return uriPath + builder.toString();
@@ -84,22 +84,22 @@ public abstract class RestControllerIntegrationTestsBase {
         this.articleRepository.deleteAll();
 
         this.requestSpecification = new RequestSpecBuilder()
-                .addFilter(
-                        RestAssuredRestDocumentation
-                                .documentationConfiguration(this.restDocumentation)
-                                .snippets().withAdditionalDefaults(new WireMockSnippet())
-                                .and()
-                                .operationPreprocessors()
-                                .withRequestDefaults(
-                                        Preprocessors.prettyPrint(),
-                                        Preprocessors.modifyUris().scheme(URI_SCHEME).host(URI_HOST).removePort()
-                                )
-                                .withResponseDefaults(
-                                        Preprocessors.prettyPrint(),
-                                        Preprocessors.modifyUris().scheme(URI_SCHEME).host(URI_HOST).removePort()
-                                )
-                )
-                .build();
+            .addFilter(
+                RestAssuredRestDocumentation
+                    .documentationConfiguration(this.restDocumentation)
+                    .snippets().withAdditionalDefaults(new WireMockSnippet())
+                    .and()
+                    .operationPreprocessors()
+                    .withRequestDefaults(
+                        Preprocessors.prettyPrint(),
+                        Preprocessors.modifyUris().scheme(URI_SCHEME).host(URI_HOST).removePort()
+                    )
+                    .withResponseDefaults(
+                        Preprocessors.prettyPrint(),
+                        Preprocessors.modifyUris().scheme(URI_SCHEME).host(URI_HOST).removePort()
+                    )
+            )
+            .build();
     }
 
     /**

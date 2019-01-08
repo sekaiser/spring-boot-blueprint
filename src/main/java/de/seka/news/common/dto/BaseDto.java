@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Optional;
 
+/**
+ * Base fields for multiple data transfer objects.
+ */
 @Getter
 @EqualsAndHashCode(of = "id", doNotUseGetters = true)
 public abstract class BaseDto implements Serializable {

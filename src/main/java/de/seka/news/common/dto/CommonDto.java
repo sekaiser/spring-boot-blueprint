@@ -11,6 +11,9 @@ import javax.validation.constraints.Size;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * Common fields for multiple data transfer objects.
+ */
 @Getter
 public abstract class CommonDto extends BaseDto {
 

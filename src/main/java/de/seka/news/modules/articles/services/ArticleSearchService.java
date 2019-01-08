@@ -8,6 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
+/**
+ * Interface for searching articles.
+ */
 @Validated
 public interface ArticleSearchService {
 
@@ -37,12 +40,18 @@ public interface ArticleSearchService {
     List<Article> getUnpublishedArticles() throws MttrbitException;
 
     /**
-     * Search for jobs which match the given filter criteria.
+     * Search for articles which match the given filter criteria.
      *
+     * @param builder The article specification builder
      * @return the articles
      * @throws MttrbitException if there is an error
      */
     List<Article> findArticles(ArticleSpecificationBuilder builder) throws MttrbitException;
 
+    /**
+     * Search for all articles.
+     *
+     * @return the articles
+     */
     List<Article> findAll();
 }

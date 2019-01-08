@@ -1,6 +1,5 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.common.dto.Article;
 import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +17,25 @@ import org.supercsv.prefs.CsvPreference;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * Loading service to insert test data into test database.
+ */
 @Slf4j
 @Service
-public class DataLoaderService {
+public final class DataLoaderService {
 
     private final String pvDataArticlesCsv;
 
     private final JpaArticleRepository articleRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param articleRepository The article repository
+     * @param pvDataArticlesCsv The path to csv file containing test data
+     */
     @Autowired
     public DataLoaderService(
             final JpaArticleRepository articleRepository,
@@ -41,9 +50,9 @@ public class DataLoaderService {
 
         ICsvBeanReader beanReader = null;
         try {
-            Resource resource = new ClassPathResource(pvDataArticlesCsv);
+            final Resource resource = new ClassPathResource(pvDataArticlesCsv);
             beanReader = new CsvBeanReader(
-                    new InputStreamReader(resource.getInputStream()),
+                    new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8.name()),
                     CsvPreference.STANDARD_PREFERENCE);
 
             final String[] header = beanReader.getHeader(true);
@@ -56,9 +65,7 @@ public class DataLoaderService {
                 article.setVersion("1.0.0");
                 articleRepository.save(article);
             }
-
-        }
-        finally {
+        } finally {
             if (beanReader != null) {
                 beanReader.close();
             }
@@ -66,13 +73,12 @@ public class DataLoaderService {
     }
 
     private static CellProcessor[] getArticlesProcessors() {
-        final CellProcessor[] processors = new CellProcessor[] {
+        return new CellProcessor[]{
                 new Optional(), // header
                 new Optional(), // description
                 new Optional(), // text
                 new Optional(), // keywords
                 new Optional(), // authors
         };
-        return processors;
     }
 }
