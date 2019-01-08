@@ -15,6 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Read only data transfer object representing an Article.
+ */
 @Getter
 @JsonDeserialize(builder = Article.Builder.class)
 public class Article extends CommonDto {
@@ -52,23 +55,25 @@ public class Article extends CommonDto {
     }
 
     /**
-     * Get the arguments to be put on the command line along with the command executable.
+     * Get the keywords associated with an article.
      *
-     * @return The command arguments
+     * @return The keywords
      */
     public Optional<String> getKeywords() {
         return Optional.ofNullable(this.keywords);
     }
 
+    /**
+     * Get the authors of the article.
+     *
+     * @return The authors
+     */
     public Optional<String> getAuthors() {
         return Optional.ofNullable(this.authors);
     }
 
     /**
-     * A builder to create jobs.
-     *
-     * @author tgianos
-     * @since 3.0.0
+     * A builder to create articles.
      */
     public static class Builder extends CommonDto.Builder<Builder> {
 
@@ -84,7 +89,6 @@ public class Article extends CommonDto {
          * @param name    The name to use for the Job
          * @param user    The user to use for the Job
          * @param version The version to use for the Job
-         * @since 3.3.0
          */
         @JsonCreator
         public Builder(
@@ -98,49 +102,72 @@ public class Article extends CommonDto {
         }
 
         /**
-         * The command arguments to use in conjunction with the command executable selected for this job.
+         * Set the authors for this article.
          *
-         * @param authors The command args
+         * @param authors The authors
          * @return The builder
-         * @since 3.3.0
          */
         public Builder withAuthors(@Nullable final String authors) {
             this.bAuthors.clear();
-            List<String> listOfAuthors = Arrays.asList(authors.split(","));
+            final List<String> listOfAuthors = Arrays.asList(authors.split(","));
             if (!listOfAuthors.isEmpty()) {
                 this.bAuthors.addAll(listOfAuthors);
             }
             return this;
         }
 
+        /**
+         * Set the keywords for this article.
+         *
+         * @param keywords The keywords
+         * @return The builder
+         */
         public Builder withKeywords(@Nullable final String keywords) {
             this.bKeywords.clear();
-            List<String> listOfKeywords = Arrays.asList(keywords.split(","));
+            final List<String> listOfKeywords = Arrays.asList(keywords.split(","));
             if (!listOfKeywords.isEmpty()) {
                 this.bKeywords.addAll(listOfKeywords);
             }
             return this;
         }
 
+        /**
+         * Set the header for this article.
+         *
+         * @param header The header
+         * @return The builder
+         */
         public Builder withHeader(final String header) {
             this.bHeader = header;
             return this;
         }
 
+        /**
+         * Set the description for this article.
+         *
+         * @param description The detailed description
+         * @return The builder
+         */
         public Builder withDescription(final String description) {
             this.bDescription = description;
             return this;
         }
 
+        /**
+         * Set the text for this article.
+         *
+         * @param text The content of the article
+         * @return The builder
+         */
         public Builder withText(final String text) {
             this.bText = text;
             return this;
         }
 
         /**
-         * Build the job.
+         * Build the article.
          *
-         * @return Create the final read-only Job instance
+         * @return Create the final read-only Article instance
          */
         public Article build() {
             return new Article(this);

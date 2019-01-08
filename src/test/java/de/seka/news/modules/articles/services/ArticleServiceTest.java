@@ -24,39 +24,39 @@ public class ArticleServiceTest {
     ArticleSearchService service;
 
     @Test
-    public void findAll_shouldReturnnonEmptyResult() {
+    public void findAllShouldReturnnonEmptyResult() {
         assertThat(service.findAll(), is(not(empty())));
     }
 
     @Test
     public void findByKeywords_empty() throws MttrbitException {
-        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+        final ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
                 .withAuthors("tester");
-        List<Article> result = service.findArticles(builder);
+        final List<Article> result = service.findArticles(builder);
         assertThat(result, is(empty()));
     }
 
     @Test
     public void findByKeywords_notEmpty() throws MttrbitException {
-        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+        final ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
                 .withKeywords("test");
-        List<Article> result = service.findArticles(builder);
+        final List<Article> result = service.findArticles(builder);
         assertThat(result, is(not(empty())));
     }
 
     @Test
     public void findByAuthors_empty() throws MttrbitException {
-        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+        final ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
                 .withAuthors("Brooks");
-        List<Article> result = service.findArticles(builder);
+        final List<Article> result = service.findArticles(builder);
         assertThat(result, is(empty()));
     }
 
     @Test
     public void findByAuthorSpec_notEmpty() throws MttrbitException {
-        ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
+        final ArticleSpecificationBuilder builder = new ArticleSpecificationBuilder()
                 .withAuthors("King");
-        List<Article> result = service.findArticles(builder);
+        final List<Article> result = service.findArticles(builder);
         assertThat(result, is(not(empty())));
     }
 }

@@ -1,6 +1,5 @@
 package de.seka.news.modules.articles.services;
 
-import de.seka.news.common.dto.Article;
 import de.seka.news.modules.articles.jpa.entities.ArticleEntity;
 import de.seka.news.modules.articles.jpa.repositories.JpaArticleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +18,23 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Loading service to insert test data into test database.
+ */
 @Slf4j
 @Service
-public class DataLoaderService {
+public final class DataLoaderService {
 
     private final String pvDataArticlesCsv;
 
     private final JpaArticleRepository articleRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param articleRepository The article repository
+     * @param pvDataArticlesCsv The path to csv file containing test data
+     */
     @Autowired
     public DataLoaderService(
             final JpaArticleRepository articleRepository,
@@ -41,7 +49,7 @@ public class DataLoaderService {
 
         ICsvBeanReader beanReader = null;
         try {
-            Resource resource = new ClassPathResource(pvDataArticlesCsv);
+            final Resource resource = new ClassPathResource(pvDataArticlesCsv);
             beanReader = new CsvBeanReader(
                     new InputStreamReader(resource.getInputStream()),
                     CsvPreference.STANDARD_PREFERENCE);
@@ -56,9 +64,7 @@ public class DataLoaderService {
                 article.setVersion("1.0.0");
                 articleRepository.save(article);
             }
-
-        }
-        finally {
+        } finally {
             if (beanReader != null) {
                 beanReader.close();
             }
@@ -66,7 +72,7 @@ public class DataLoaderService {
     }
 
     private static CellProcessor[] getArticlesProcessors() {
-        final CellProcessor[] processors = new CellProcessor[] {
+        final CellProcessor[] processors = new CellProcessor[]{
                 new Optional(), // header
                 new Optional(), // description
                 new Optional(), // text

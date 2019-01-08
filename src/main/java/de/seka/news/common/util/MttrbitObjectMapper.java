@@ -9,11 +9,11 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.time.ZoneId;
 import java.util.TimeZone;
 
-/*
+/**
  * A singleton for sharing a Jackson Object Mapper instance across mttrbit and not having to redefine the Object Mapper
  * everywhere.
  */
-public class MttrbitObjectMapper {
+public final class MttrbitObjectMapper {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .registerModule(new Jdk8Module())
@@ -22,6 +22,9 @@ public class MttrbitObjectMapper {
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
 
+    /**
+     * Constructor.
+     */
     private MttrbitObjectMapper() {
     }
 

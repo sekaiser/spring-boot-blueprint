@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.jpa.domain.Specification.where;
+import org.springframework.data.jpa.domain.Specification;
 
 /**
  * JPA implementation of the Article Search Service.
@@ -26,39 +26,63 @@ public class JpaArticleSearchServiceImpl implements ArticleSearchService {
 
     private final JpaArticleRepository articleRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param articleRepository The article repository.
+     */
     public JpaArticleSearchServiceImpl(final JpaArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Article getArticle(@NotBlank(message = "No id entered. Unable to get article.") String id) throws MttrbitException {
+    public Article getArticle(
+            @NotBlank(message = "No id entered. Unable to get article.") final String id
+    ) throws MttrbitException {
         return JpaServiceUtils.toArticleDto(
                 articleRepository
                         .findByUniqueId(id, ArticleProjection.class)
                         .orElseThrow(() -> new MttrbitNotFoundException("No article with id " + id)));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> getPublishedArticles() throws MttrbitException {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> getUnpublishedArticles() throws MttrbitException {
         return Collections.emptyList();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public List<Article> findArticles(ArticleSpecificationBuilder builder) {
+    public List<Article> findArticles(final ArticleSpecificationBuilder builder) {
         return builder.build()
-                .map(spec -> articleRepository.findAll(where(spec)).stream().map(JpaServiceUtils::toArticleDto).collect(Collectors.toList()))
+                .map(spec -> articleRepository
+                        .findAll(Specification.where(spec))
+                        .stream()
+                        .map(JpaServiceUtils::toArticleDto)
+                        .collect(Collectors.toList()))
                 .orElseGet(Collections::emptyList);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Article> findAll() {
         return articleRepository.findAll().stream().map(JpaServiceUtils::toArticleDto).collect(Collectors.toList());
     }
-
-
 }

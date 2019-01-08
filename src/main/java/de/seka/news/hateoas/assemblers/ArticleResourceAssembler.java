@@ -1,13 +1,16 @@
-package de.seka.news.hateos.assemblers;
+package de.seka.news.hateoas.assemblers;
 
 import de.seka.news.common.dto.Article;
 import de.seka.news.common.exceptions.MttrbitException;
-import de.seka.news.hateos.resources.ArticleResource;
+import de.seka.news.hateoas.resources.ArticleResource;
 import de.seka.news.modules.articles.api.ArticleController;
 import org.springframework.hateoas.ResourceAssembler;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Assembles article resources out of article data transfer objects.
+ */
 @Component
 public class ArticleResourceAssembler implements ResourceAssembler<Article, ArticleResource> {
 

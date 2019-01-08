@@ -5,29 +5,181 @@ buildscript {
 	repositories {
 		gradlePluginPortal()
 		jcenter()
-		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath("io.franzbecker:gradle-lombok:1.14")
+		classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
+		classpath "org.ajoberstar.grgit:grgit-gradle:3.0.0-beta.1"
+		classpath "org.ajoberstar:gradle-git-publish:1.0.1"
+		classpath "org.ajoberstar.grgit:grgit-gradle:3.0.0-beta.1"
+		classpath "org.ajoberstar:gradle-git-publish:1.0.1"
+		classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.5.2"
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		classpath "io.franzbecker:gradle-lombok:1.14"
+		classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+		classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.6"
 	}
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'io.franzbecker.gradle-lombok'
+apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: "org.ajoberstar.grgit"
+apply plugin: "org.ajoberstar.git-publish"
 
-group = 'de.seka'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+allprojects {
+	apply plugin: "jacoco"
+	apply plugin: "idea"
+	apply plugin: "eclipse"
+
+	repositories {
+		jcenter()
+		maven {
+			url "https://repo.spring.io/snapshot"
+		}
+	}
+}
+
+idea {
+	project {
+		jdkName = "1.8"
+		languageLevel = "1.8"
+		vcs = "Git"
+	}
+}
+
+
+apply plugin: "java"
+apply plugin: "checkstyle"
+apply plugin: "com.github.spotbugs"
+apply plugin: "pmd"
+apply plugin: 'org.springframework.boot'
+apply plugin: "io.spring.dependency-management"
+apply plugin: "com.gorylenko.gradle-git-properties"
+apply plugin: "groovy"
+apply plugin: "io.franzbecker.gradle-lombok"
+
+group = "de.seka.news"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+task removeIdeaOutDirectory(type: Delete) {
+	file("${projectDir}/out").deleteDir()
+}
+
+clean {
+	dependsOn(removeIdeaOutDirectory)
+}
+
+compileJava {
+	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+compileTestJava {
+	options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+tasks.withType(Test) {
+	task ->
+		// set heap size for the test JVM(s)
+		minHeapSize = "256m"
+		maxHeapSize = "2g"
+
+		// Environment properties to be forwarded to the test runtime
+		[
+				"CI",
+				"INTEGRATION_TEST_DB",
+		].each { envVariableName ->
+			if (System.getenv(envVariableName) != null) {
+				systemProperty envVariableName, System.getenv(envVariableName)
+			}
+		}
+
+		reports.html.setDestination(new File("${reporting.baseDir}/test/${task.name}"))
+		jacocoTestReport.getExecutionData().plus(files("$buildDir/jacoco/${task.name}.exec"))
+}
+
+test {
+	testLogging {
+		if (System.getenv("CI") != null) {
+			events "passed", "skipped", "failed"
+		} else {
+			events "failed"
+		}
+	}
+}
+
+checkstyle {
+	configFile = new File(project.projectDir, "codequality/checkstyle/checkstyle.xml")
+	toolVersion = "8.13"
+}
+
+spotbugs {
+	excludeFilter = new File(project.projectDir, "codequality/spotbugs/excludeFilter.xml")
+}
+
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+}
+
+pmd {
+	toolVersion = "6.10.0"
+}
+
+tasks.withType(Pmd) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+}
+
+jacocoTestReport {
+	reports {
+		html.enabled = true
+		xml.enabled = true
+		csv.enabled = false
+	}
+}
+
+lombok {
+	version = "1.18.4"
+}
 
 repositories {
 	mavenCentral()
 }
 
-task("addNewMigration") {
+task codeCoverageReport(type: JacocoReport, group: "Coverage reports") {
+	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+	dependsOn *.test
+
+	reports {
+		xml.enabled = true
+		xml.destination new File("${buildDir}/reports/jacoco/report.xml")
+		html.enabled = true
+		html.destination new File("${buildDir}/reports/jacoco/html")
+		csv.enabled = false
+	}
+}
+
+coveralls {
+	sourceDirs = this.sourceSets.main.allSource.srcDirs.flatten().<String>asList()
+	jacocoReportPath = "${project.buildDir}/reports/jacoco/report.xml"
+}
+
+tasks.coveralls {
+	group = "Coverage reports"
+	description = "Uploads the aggregated coverage report to Coveralls"
+
+	dependsOn codeCoverageReport
+	onlyIf {
+		System.env."CI"
+	}
+}
+
+task addNewMigration(group: "other") {
 	doLast {
 		def timestamp = new Date().format("yyyyMMddHHmmssSSS", TimeZone.getTimeZone("GMT"))
 		def fileName = "./src/main/resources/db/migration/" + "V" + timestamp + "___" + migrationName + ".sql"

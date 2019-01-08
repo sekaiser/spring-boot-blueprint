@@ -7,18 +7,29 @@ import de.seka.news.modules.articles.services.ArticlePersistenceService;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * JPA implementation of the Article Persistence Service.
+ */
 public class JpaArticlePersistenceServiceImpl extends JpaBaseService implements ArticlePersistenceService {
 
     private final JpaArticleRepository articleRepository;
 
+    /**
+     * Constructor.
+     *
+     * @param articleRepository The article repository
+     */
     public JpaArticlePersistenceServiceImpl(
             final JpaArticleRepository articleRepository
     ) {
         this.articleRepository = articleRepository;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void createArticle(@NotNull Article article) throws MttrbitException {
+    public void createArticle(@NotNull final Article article) throws MttrbitException {
 
     }
 }

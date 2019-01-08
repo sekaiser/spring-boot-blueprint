@@ -6,8 +6,17 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * Interface for providing persistence functions for articles other than search.
+ */
 @Validated
 public interface ArticlePersistenceService {
 
-    void createArticle(@NotNull final Article article) throws MttrbitException;
+    /**
+     * Save teh initial article fields in the data store.
+     *
+     * @param article the article to persist
+     * @throws MttrbitException if there is an error
+     */
+    void createArticle(@NotNull Article article) throws MttrbitException;
 }
